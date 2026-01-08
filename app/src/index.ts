@@ -13,6 +13,7 @@ import {Plugin} from "./t_plugin";
 import {Encapsulation} from "./t_encapsulation";
 import {Cookies} from "./t_cookies";
 import { HandlingError } from "./t_error";
+import { HandlingValidError } from "./t.validation_error";
 
 const app = new Elysia()
 
@@ -38,7 +39,7 @@ const app = new Elysia()
   .use(Hooks)
   .use(Guard)
   .use(Encapsulation)
-  
+  .use(HandlingValidError)
   
   .listen(3000);
 
