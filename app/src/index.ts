@@ -12,17 +12,20 @@ import {Guard} from "./t_guard";
 import {Plugin} from "./t_plugin";
 import {Encapsulation} from "./t_encapsulation";
 import {Cookies} from "./t_cookies";
+import { HandlingError } from "./t_error";
 
 const app = new Elysia()
-  // Global Storage DB Temporary Storage
-  
-  .get("/", () => "Hello Elysia")
-  
-  .onBeforeHandle(
-    ({path}) => {
-      return console.log("U are visiting "+path)
-    }
-  )
+
+  .use(HandlingError)
+
+// Define cookies
+  .use(Cookies)
+
+  .get("/", ({cookie: {visit, ui_settings}}) => {
+
+    return `You've Visited this site ${visit.value}`
+
+  })
 
   // P
   .use(P_profile)
@@ -35,7 +38,7 @@ const app = new Elysia()
   .use(Hooks)
   .use(Guard)
   .use(Encapsulation)
-  .use(Cookies)
+  
   
   .listen(3000);
 
